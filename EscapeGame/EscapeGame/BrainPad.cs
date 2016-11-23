@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 using GHI.Pins;
+//using GHI.IO;
 using Microsoft.SPOT.Hardware;
 using System;
 using System.Threading;
@@ -1847,85 +1848,92 @@ public static class BrainPad
     /// </summary>
     public static class Legacy
     {
-        /// <summary>
-        /// Provides access to the touch pads on the BrainPad. The contents of this class are commented out. To use this class, uncomment the below code and add a reference to GHI.Hardware.
-        /// </summary>
-        public static class TouchPad
-        {
-            //private static PulseFeedback[] pins;
-            //private static long[] thresholds;
-            //
-            //static TouchPad() {
-            //	thresholds = new long[] { 130, 130, 130 };
-            //	pins = new PulseFeedback[] {
-            //		new PulseFeedback(PulseFeedback.Mode.DrainDuration, true, 10, Peripherals.TouchPad.Left),
-            //		new PulseFeedback(PulseFeedback.Mode.DrainDuration, true, 10, Peripherals.TouchPad.Middle),
-            //		new PulseFeedback(PulseFeedback.Mode.DrainDuration, true, 10, Peripherals.TouchPad.Right)
-            //	};
-            //}
-            //
-            ///// <summary>
-            ///// The available touch pads.
-            ///// </summary>
-            //public enum Pad {
-            //	/// <summary>
-            //	/// The left pad.
-            //	/// </summary>
-            //	Left,
-            //	/// <summary>
-            //	/// The middle pad.
-            //	/// </summary>
-            //	Middle,
-            //	/// <summary>
-            //	/// The right pad.
-            //	/// </summary>
-            //	Right
-            //}
-            //
-            ///// <summary>
-            ///// Determines whether or not the left pad is touched.
-            ///// </summary>
-            ///// <returns>Whether or not the pad is touched.</returns>
-            //public static bool IsLeftTouched() {
-            //	return IsTouched(Pad.Left);
-            //}
-            //
-            ///// <summary>
-            ///// Determines whether or not the middle pad is touched.
-            ///// </summary>
-            ///// <returns>Whether or not the pad is touched.</returns>
-            //public static bool IsMiddleTouched() {
-            //	return IsTouched(Pad.Middle);
-            //}
-            //
-            ///// <summary>
-            ///// Determines whether or not the right pad is touched.
-            ///// </summary>
-            ///// <returns>Whether or not the pad is touched.</returns>
-            //public static bool IsRightTouched() {
-            //	return IsTouched(Pad.Right);
-            //}
-            //
-            ///// <summary>
-            ///// Determines whether or not the given pad is touched.
-            ///// </summary>
-            ///// <param name="pad">The pad to check.</param>
-            ///// <returns>Whether or not the pad is touched.</returns>
-            //public static bool IsTouched(Pad pad) {
-            //	return pins[(int)pad].Read() > thresholds[(int)pad];
-            //}
-            //
-            ///// <summary>
-            ///// Sets the threshold beyond which a touch should be detected.
-            ///// </summary>
-            ///// <param name="pad">The pad to set the threshold for.</param>
-            ///// <param name="threshold">The threshold value to set.</param>
-            //public static void SetThreshold(Pad pad, long threshold) {
-            //	if (threshold <= 0) throw new ArgumentOutOfRangeException("threshold", "threshold must be positive.");
-            //
-            //	thresholds[(int)pad] = threshold;
-            //}
-        }
+        ///// <summary>
+        ///// Provides access to the touch pads on the BrainPad. The contents of this class are commented out. To use this class, uncomment the below code and add a reference to GHI.Hardware.
+        ///// </summary>
+        //public static class TouchPad
+        //{
+        //    private static PulseFeedback[] pins;
+        //    private static long[] thresholds;
+
+        //    static TouchPad()
+        //    {
+        //        thresholds = new long[] { 130, 130, 130 };
+        //        pins = new PulseFeedback[] {
+        //            new PulseFeedback(PulseFeedback.Mode.DrainDuration, true, 10, Peripherals.TouchPad.Left),
+        //            new PulseFeedback(PulseFeedback.Mode.DrainDuration, true, 10, Peripherals.TouchPad.Middle),
+        //            new PulseFeedback(PulseFeedback.Mode.DrainDuration, true, 10, Peripherals.TouchPad.Right)
+        //        };
+        //    }
+
+        //    /// <summary>
+        //    /// The available touch pads.
+        //    /// </summary>
+        //    public enum Pad
+        //    {
+        //        /// <summary>
+        //        /// The left pad.
+        //        /// </summary>
+        //        Left,
+        //        /// <summary>
+        //        /// The middle pad.
+        //        /// </summary>
+        //        Middle,
+        //        /// <summary>
+        //        /// The right pad.
+        //        /// </summary>
+        //        Right
+        //    }
+
+        //    /// <summary>
+        //    /// Determines whether or not the left pad is touched.
+        //    /// </summary>
+        //    /// <returns>Whether or not the pad is touched.</returns>
+        //    public static bool IsLeftTouched()
+        //    {
+        //        return IsTouched(Pad.Left);
+        //    }
+
+        //    /// <summary>
+        //    /// Determines whether or not the middle pad is touched.
+        //    /// </summary>
+        //    /// <returns>Whether or not the pad is touched.</returns>
+        //    public static bool IsMiddleTouched()
+        //    {
+        //        return IsTouched(Pad.Middle);
+        //    }
+
+        //    /// <summary>
+        //    /// Determines whether or not the right pad is touched.
+        //    /// </summary>
+        //    /// <returns>Whether or not the pad is touched.</returns>
+        //    public static bool IsRightTouched()
+        //    {
+        //        return IsTouched(Pad.Right);
+        //    }
+
+        //    /// <summary>
+        //    /// Determines whether or not the given pad is touched.
+        //    /// </summary>
+        //    /// <param name="pad">The pad to check.</param>
+        //    /// <returns>Whether or not the pad is touched.</returns>
+        //    public static bool IsTouched(Pad pad)
+        //    {
+        //        return pins[(int)pad].Read() > thresholds[(int)pad];
+        //    }
+
+        //    /// <summary>
+        //    /// Sets the threshold beyond which a touch should be detected.
+        //    /// </summary>
+        //    /// <param name="pad">The pad to set the threshold for.</param>
+        //    /// <param name="threshold">The threshold value to set.</param>
+        //    public static void SetThreshold(Pad pad, long threshold)
+        //    {
+        //        if (threshold <= 0) throw new ArgumentOutOfRangeException("threshold", "threshold must be positive.");
+
+        //        thresholds[(int)pad] = threshold;
+        //    }
+        //}
 
         /// <summary>
         /// Board definition for the BrainPad expansion.
