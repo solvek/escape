@@ -1,5 +1,6 @@
 //#define ENABLE_SOUND
 
+using EscapeGame;
 class Program
 {
     private int players = 2;
@@ -12,6 +13,8 @@ class Program
     public void BrainPadLoop()
     {
         ShowSplash();
+
+        players = new PlayersActivity(players).Show();
     }
 
     private void ShowSplash()
