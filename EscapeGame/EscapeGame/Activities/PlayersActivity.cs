@@ -2,7 +2,7 @@ using System;
 using Microsoft.SPOT;
 using System.Threading;
 
-namespace EscapeGame
+namespace EscapeGame.Activities
 {
     class PlayersActivity
     {
@@ -11,15 +11,23 @@ namespace EscapeGame
         private int players;
         ManualResetEvent onCompletionEvent = new ManualResetEvent(false);
 
-        public PlayersActivity(int initialPlayers)
+        private PlayersActivity(int initialPlayers)
         {
             players = initialPlayers;
         }
 
-        public int Show()
+        public static int Show(int initialPlayers)
+        {
+            return new PlayersActivity(initialPlayers).Show();
+        }
+
+        private int Show()
         {
             BrainPad.Display.Clear();
             BrainPad.Display.DrawLargeText(40, 10, "Players", BrainPad.Color.Cyan);
+
+            BrainPad.Display.DrawText(10, 90, "Press Up/Down to change", BrainPad.Color.Red);
+            BrainPad.Display.DrawText(15, 100, "Press Right to proceed", BrainPad.Color.Red);
 
             DrawPlayers();
 
@@ -35,21 +43,21 @@ namespace EscapeGame
 
         private void DrawPlayers()
         {
-            BrainPad.Display.DrawLargeText(80, 45, players.ToString(), BrainPad.Color.Green);
+            BrainPad.Display.DrawExtraLargeText(80, 45, players.ToString(), BrainPad.Color.Green);
         }
 
         void PlayersCount_ButtonPressed(BrainPad.Button.DPad button, BrainPad.Button.State state)
         {
             switch (button)
             {
-                case BrainPad.Button.DPad.Down:
+                case BrainPad.Button.DPad.Up:
                     if (players < MAX_PLAYERS)
                     {
                         players++;
                         DrawPlayers();
                     }
                     break;
-                case BrainPad.Button.DPad.Up:
+                case BrainPad.Button.DPad.Down:
                     if (players > 1)
                     {
                         players--;
