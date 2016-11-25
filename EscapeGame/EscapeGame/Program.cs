@@ -15,6 +15,7 @@ class Program
     {
         SplashActivity.Show();
         players = PlayersActivity.Show(players);
+        GameActivity.Show(players);
     }
 
  #if ENABLE_SOUND

@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Activities\GameActivity.cs" />
     <Compile Include="Activities\SplashActivity.cs" />
     <Compile Include="BrainPad.cs" />
     <Compile Include="Activities\PlayersActivity.cs" />
