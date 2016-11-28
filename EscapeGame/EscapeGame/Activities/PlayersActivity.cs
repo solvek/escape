@@ -38,6 +38,9 @@ namespace EscapeGame.Activities
 
             BrainPad.Button.ButtonPressed -= PlayersCount_ButtonPressed;
 
+            //BrainPad.Display.Clear();
+            //BrainPad.Display.DrawLargeText(10, 70, "One moment!", BrainPad.Color.White);
+
             return players;
         }
 
@@ -58,7 +61,7 @@ namespace EscapeGame.Activities
                     }
                     break;
                 case BrainPad.Button.DPad.Down:
-                    if (players > 1)
+                    if (players > 2)
                     {
                         players--;
                         DrawPlayers();

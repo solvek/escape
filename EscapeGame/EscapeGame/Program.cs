@@ -8,12 +8,12 @@ class Program
 
     public void BrainPadSetup()
     {
-        BrainPad.Buzzer.SetVolume(BrainPad.Buzzer.Volume.Quiet);        
+        BrainPad.Buzzer.SetVolume(BrainPad.Buzzer.Volume.Quiet);
+        SplashActivity.Show();
     }
 
     public void BrainPadLoop()
-    {
-        SplashActivity.Show();
+    {        
         players = PlayersActivity.Show(players);
         GameActivity.Show(players);
     }
