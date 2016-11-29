@@ -25,6 +25,11 @@ namespace EscapeGame.Activities
         private readonly InterruptPort inputLoss = new InterruptPort(BrainPad.Legacy.Expansion.Gpio.E2, true, Microsoft.SPOT.Hardware.Port.ResistorMode.PullDown, Port.InterruptMode.InterruptEdgeHigh);
         private readonly InterruptPort inputFinish = new InterruptPort(BrainPad.Legacy.Expansion.Gpio.E3, true, Microsoft.SPOT.Hardware.Port.ResistorMode.PullDown, Port.InterruptMode.InterruptEdgeHigh);
 
+        private int rgbRed;
+        private int rgbGreen;
+        private int rgbBlue;
+
+
         private GameActivity(int players)
         {
             this.players = players;
@@ -53,6 +58,8 @@ namespace EscapeGame.Activities
 
             while (BrainPad.Looping)
             {
+                BrainPad.TrafficLight.TurnOffAllLights();
+                BrainPad.TrafficLight.TurnYellowLightOn();
                 DrawPlayer();
                 ClearMiddle();
                 BrainPad.Display.DrawLargeText(30, 50, "To Start!", BrainPad.Color.White);
@@ -64,6 +71,7 @@ namespace EscapeGame.Activities
 
                 ClearMiddle();
                 BrainPad.Display.DrawLargeText(40, 50, "Ready?", BrainPad.Color.White);
+                
 
                 while (inputStart.Read())
                 {
@@ -75,8 +83,17 @@ namespace EscapeGame.Activities
                 startTime = DateTime.Now;
                 lastContact = Contact.None;
 
+                BrainPad.LightBulb.TurnOn();
+                BrainPad.TrafficLight.TurnGreenLightOn();
+
                 while (BrainPad.Looping)
                 {
+                    BrainPad.LightBulb.SetColor(rgbRed / 255.0, rgbGreen / 255.0, rgbBlue / 255.0);
+
+                    rgbRed = (rgbRed + 1) % 256;
+                    rgbGreen = (rgbGreen + 3) % 256;
+                    rgbBlue = (rgbBlue + 5) % 256;
+
                     BrainPad.Wait.Milliseconds(50);
 
                     ticks = (DateTime.Now - startTime).Ticks;
@@ -90,6 +107,8 @@ namespace EscapeGame.Activities
                         ClearMiddle();
                         BrainPad.Display.DrawLargeText(40, 40, "Looser!", BrainPad.Color.White);
                         BrainPad.Display.DrawLargeText(45, 65, "Sorry!", BrainPad.Color.White);
+                        BrainPad.TrafficLight.TurnOffAllLights();
+                        BrainPad.TrafficLight.TurnRedLightOn();
                         score = -1;
                         break;
                     }
@@ -106,11 +125,14 @@ namespace EscapeGame.Activities
                     {
                         ClearMiddle();
                         BrainPad.Display.DrawLargeText(30, 50, "Well Done!", BrainPad.Color.White);
+                        BrainPad.TrafficLight.TurnYellowLightOff();                        
                         break;
                     }
 
                     BrainPad.Display.DrawLargeText(60, 50, DisplayNumber(score, 6), BrainPad.Color.White);
                 }
+
+                BrainPad.LightBulb.TurnOff();
 
                 if (score > -2)
                 {                 
