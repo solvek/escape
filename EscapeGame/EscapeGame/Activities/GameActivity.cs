@@ -47,18 +47,19 @@ namespace EscapeGame.Activities
 
         private void Show()
         {
-            BrainPad.Display.Clear();
-            BrainPad.Display.DrawLargeText(30, 50, "To Start!", BrainPad.Color.White);
+            BrainPad.Display.Clear();            
 
             long ticks;
 
             while (BrainPad.Looping)
             {
                 DrawPlayer();
+                ClearMiddle();
+                BrainPad.Display.DrawLargeText(30, 50, "To Start!", BrainPad.Color.White);
 
                 while(!inputStart.Read())
                 {
-                    BrainPad.Wait.Milliseconds(20);
+                    BrainPad.Wait.Milliseconds(5);
                 }
 
                 ClearMiddle();
@@ -66,7 +67,7 @@ namespace EscapeGame.Activities
 
                 while (inputStart.Read())
                 {
-                    BrainPad.Wait.Milliseconds(10);
+                    BrainPad.Wait.Milliseconds(5);
                 }
                 
                 ClearMiddle();
@@ -120,6 +121,13 @@ namespace EscapeGame.Activities
                     }
 
                     currentPlayer = (currentPlayer + 1) % players;
+                }
+
+                BrainPad.Display.DrawText(32, 85, "Press Right Button", BrainPad.Color.Red);
+
+                while (!BrainPad.Button.IsRightPressed())
+                {
+                    BrainPad.Wait.Milliseconds(10);
                 }
             }
         }
