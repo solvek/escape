@@ -6,19 +6,34 @@ namespace EscapeGame
 {
     class Melody
     {
-        private readonly ArrayList notes = new ArrayList();
-        private readonly ArrayList durations = new ArrayList();
+        private int notesCount;
+        private readonly int[] notes;
+        private readonly int[] durations;
 
-        private int lastDuration = 4;               
+        private int lastDuration = 4;
+        private int currentNote;
+        
+        public Melody(int notesCount)
+        {
+            this.notesCount = notesCount;
+            currentNote = 0;
+
+            notes = new int[notesCount];
+            durations = new int[notesCount];
+        }
 
         public void Play(int tempo)
         {
         #if ENABLE_SOUND
             int noteDuration;
 
-            for(int i=0;i<notes.Count;i++)
-            {
-                noteDuration = tempo / (int)durations[i];
+            for (int i = 0; i < notesCount; i++)
+            {                
+                noteDuration = (int)durations[i];
+
+                //BrainPad.WriteDebugMessage("Notes: " + notesCount + ", current note: " + i + ", Duration: " + noteDuration);
+
+                noteDuration = 1000 / noteDuration;
                 BrainPad.Buzzer.PlayFrequency((int)notes[i]);
                 BrainPad.Wait.Milliseconds(noteDuration);
                 BrainPad.Buzzer.Stop();
@@ -29,18 +44,20 @@ namespace EscapeGame
 
         public Melody N(int note, int duration)
         {
-            notes.Add(note);
-            durations.Add(durations);
+            notes[currentNote] = note;
+            durations[currentNote] = duration;
             lastDuration = duration;
 
+            currentNote++;
             return this;
         }
 
         public Melody N(int note)
         {
-            notes.Add(note);
-            durations.Add(lastDuration);
+            notes[currentNote] = note;
+            durations[currentNote] = lastDuration;
 
+            currentNote++;
             return this;
         }
 

@@ -233,7 +233,7 @@ namespace EscapeGame.Activities
         }
 
 
-        private const Melody melodySuccess = new Melody()
+        private static readonly Melody melodySuccess = new Melody(16)
          .N(Melody.NOTE_E7, 12)
          .N(Melody.NOTE_E7)
          .N(0)
