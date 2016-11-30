@@ -29,7 +29,6 @@ namespace EscapeGame.Activities
         private int rgbGreen;
         private int rgbBlue;
 
-
         private GameActivity(int players)
         {
             this.players = players;
@@ -125,7 +124,8 @@ namespace EscapeGame.Activities
                     {
                         ClearMiddle();
                         BrainPad.Display.DrawLargeText(30, 50, "Well Done!", BrainPad.Color.White);
-                        BrainPad.TrafficLight.TurnYellowLightOff();                        
+                        BrainPad.TrafficLight.TurnYellowLightOff();
+                        melodySuccess.Play(1000);
                         break;
                     }
 
@@ -231,5 +231,27 @@ namespace EscapeGame.Activities
             Loss,
             Finish
         }
+
+
+        private const Melody melodySuccess = new Melody()
+         .N(Melody.NOTE_E7, 12)
+         .N(Melody.NOTE_E7)
+         .N(0)
+         .N(Melody.NOTE_E7)
+
+         .N(0)
+         .N(Melody.NOTE_C7)
+         .N(Melody.NOTE_E7)
+         .N(0)
+
+         .N(Melody.NOTE_G7)
+         .N(0)
+         .N(0)
+         .N(0)
+
+         .N(Melody.NOTE_G6)
+         .N(0)
+         .N(0)
+         .N(0);
     }
 }

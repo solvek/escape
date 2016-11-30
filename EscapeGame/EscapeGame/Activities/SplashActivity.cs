@@ -19,25 +19,6 @@ namespace EscapeGame.Activities
             BrainPad.Display.DrawText(27, 115, txtTemp, BrainPad.Color.Green);
 
             BlinkTraficUntilButtonPress();
-
-        #if ENABLE_SOUND
-        PlayMelody(10, new Tone[]{
-            new Tone{note = BrainPad.Buzzer.Note.E, beat = 16},
-            new Tone{note = BrainPad.Buzzer.Note.D, beat = 16},
-            new Tone{note = BrainPad.Buzzer.Note.C, beat = 16},
-            new Tone{note = BrainPad.Buzzer.Note.D, beat = 16},
-            new Tone{note = BrainPad.Buzzer.Note.E, beat = 16},
-            new Tone{note = BrainPad.Buzzer.Note.E, beat = 16},
-            new Tone{note = BrainPad.Buzzer.Note.E, beat = 16},
-
-            new Tone{note = BrainPad.Buzzer.Note.D, beat = 16},
-            new Tone{note = BrainPad.Buzzer.Note.D, beat = 16},
-            new Tone{note = BrainPad.Buzzer.Note.D, beat = 16},
-            new Tone{note = BrainPad.Buzzer.Note.E, beat = 16},
-            new Tone{note = BrainPad.Buzzer.Note.E, beat = 16},
-            new Tone{note = BrainPad.Buzzer.Note.E, beat = 16},
-        });
-        #endif
         }
 
         private static void BlinkTraficUntilButtonPress()

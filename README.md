@@ -7,6 +7,14 @@ A game with BrainPad board
  * [Board details](https://www.ghielectronics.com/support/brainpad)
  * [Getting started](https://www.ghielectronics.com/support/brainpad/duino)
 
+# Sound Enabling
+
+In order to enabe sound
+
+ 1. Right click on `EscapeGame` project
+ 2. Go to `Build` section
+ 3. Add `ENABLE_SOUND` to the end of `Conditional compilation symbols` separating by comma items
+
 # Prototyping on Breadboard
 
 <img src="doc/Proto.jpg" alt="Prototype" width="400">
@@ -14,6 +22,7 @@ A game with BrainPad board
  * Yellow button (Start) - E1
  * Red button (Loss) - E2
  * Green button (Finish) - E3
+ * V5 - E15
 
 # Game Board
 
