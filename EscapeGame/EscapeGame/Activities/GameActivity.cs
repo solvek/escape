@@ -191,7 +191,8 @@ namespace EscapeGame.Activities
 
         private void ClearMiddle()
         {
-            BrainPad.Display.DrawFilledRectangle(0, 25, BrainPad.Display.Width, 70, BrainPad.Color.Black);
+            BrainPad.Display.Clear();
+            DrawPlayer();
         }
 
         private static String DisplayNumber(long v, int chars)

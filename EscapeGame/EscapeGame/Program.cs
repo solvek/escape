@@ -9,6 +9,9 @@ class Program
     public void BrainPadSetup()
     {
         BrainPad.Buzzer.SetVolume(BrainPad.Buzzer.Volume.Quiet);
+
+//        TestActivity.Show();
+        
         SplashActivity.Show();
     }
 
