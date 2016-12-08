@@ -51,89 +51,20 @@ namespace EscapeGame.Activities
 
         private void Show()
         {
-            BrainPad.Display.Clear();            
-
-            long ticks;
+            BrainPad.Display.Clear();                        
 
             while (BrainPad.Looping)
             {
-                BrainPad.TrafficLight.TurnOffAllLights();
-                BrainPad.TrafficLight.TurnYellowLightOn();
-                DrawPlayer();
-                ClearMiddle();
-                BrainPad.Display.DrawLargeText(30, 50, "To Start!", BrainPad.Color.White);
+                PrepareRound();
 
-                while(!inputStart.Read())
+                while (PlayRound())
                 {
-                    BrainPad.Wait.Milliseconds(5);
-                }
-
-                ClearMiddle();
-                BrainPad.Display.DrawLargeText(40, 50, "Ready?", BrainPad.Color.White);
-                
-
-                while (inputStart.Read())
-                {
-                    BrainPad.Wait.Milliseconds(5);
-                }
-                
-                ClearMiddle();
-
-                startTime = DateTime.Now;
-                lastContact = Contact.None;
-
-                BrainPad.LightBulb.TurnOn();
-                BrainPad.TrafficLight.TurnGreenLightOn();
-
-                while (BrainPad.Looping)
-                {
-                    BrainPad.LightBulb.SetColor(rgbRed / 255.0, rgbGreen / 255.0, rgbBlue / 255.0);
-
-                    rgbRed = (rgbRed + 1) % 256;
-                    rgbGreen = (rgbGreen + 3) % 256;
-                    rgbBlue = (rgbBlue + 5) % 256;
-
-                    BrainPad.Wait.Milliseconds(50);
-
-                    ticks = (DateTime.Now - startTime).Ticks;
-
-                    score = ticks / TimeSpan.TicksPerMillisecond;
-
-                    //BrainPad.WriteDebugMessage("Player starting time is: " + startTime.ToString());
-
-                    if (ticks > 600 * TimeSpan.TicksPerSecond || lastContact == Contact.Loss)
-                    {
-                        ClearMiddle();
-                        BrainPad.Display.DrawLargeText(40, 40, "Looser!", BrainPad.Color.White);
-                        BrainPad.Display.DrawLargeText(45, 65, "Sorry!", BrainPad.Color.White);
-                        BrainPad.TrafficLight.TurnOffAllLights();
-                        BrainPad.TrafficLight.TurnRedLightOn();
-                        melodyFail.Play(1000);
-                        score = -1;
-                        break;
-                    }
-
                     if (BrainPad.Button.IsLeftPressed() && PromptExit()) return;
-
-                    if (lastContact == Contact.Start)
-                    {
-                        score = -2;
-                        break;
-                    }
-
-                    if (lastContact == Contact.Finish)
-                    {
-                        ClearMiddle();
-                        BrainPad.Display.DrawLargeText(30, 50, "Well Done!", BrainPad.Color.White);
-                        BrainPad.TrafficLight.TurnYellowLightOff();
-                        melodySuccess.Play(1000);
-                        break;
-                    }
-
-                    BrainPad.Display.DrawLargeText(60, 50, DisplayNumber(score, 6), BrainPad.Color.White);
                 }
 
                 BrainPad.LightBulb.TurnOff();
+
+                BrainPad.WriteDebugMessage("Round finished. Score: "+score);
 
                 if (score > -2)
                 {                 
@@ -153,6 +84,101 @@ namespace EscapeGame.Activities
                     BrainPad.Wait.Milliseconds(10);
                 }
             }
+        }
+
+        private bool PlayRound()
+        {
+            PlayColor();
+
+            BrainPad.Wait.Milliseconds(50);
+
+            long ticks = (DateTime.Now - startTime).Ticks;
+
+            score = ticks / TimeSpan.TicksPerMillisecond;
+
+            //BrainPad.WriteDebugMessage("Player starting time is: " + startTime.ToString());
+
+            if (ticks > 600 * TimeSpan.TicksPerSecond || lastContact == Contact.Loss)
+            {
+                ShowLoss();
+                BrainPad.WriteDebugMessage("Fail happend");
+                return false;
+            }                    
+
+            if (lastContact == Contact.Start)
+            {
+                score = -2;
+                return false;
+            }
+
+            if (lastContact == Contact.Finish)
+            {
+                ShowWin();
+                return false;
+            }
+
+            BrainPad.Display.DrawLargeText(60, 50, DisplayNumber(score, 6), BrainPad.Color.White);
+
+            return true;
+        }
+
+        private void PrepareRound()
+        {
+            BrainPad.TrafficLight.TurnOffAllLights();
+            BrainPad.TrafficLight.TurnYellowLightOn();
+            DrawPlayer();
+            ClearMiddle();
+            BrainPad.Display.DrawLargeText(30, 50, "To Start!", BrainPad.Color.White);
+
+            while (!inputStart.Read())
+            {
+                BrainPad.Wait.Milliseconds(5);
+            }
+
+            ClearMiddle();
+            BrainPad.Display.DrawLargeText(40, 50, "Ready?", BrainPad.Color.White);
+
+
+            while (inputStart.Read())
+            {
+                BrainPad.Wait.Milliseconds(5);
+            }
+
+            ClearMiddle();
+
+            startTime = DateTime.Now;
+            lastContact = Contact.None;
+
+            BrainPad.LightBulb.TurnOn();
+            BrainPad.TrafficLight.TurnGreenLightOn();
+        }
+
+        private void PlayColor()
+        {
+            BrainPad.LightBulb.SetColor(rgbRed / 255.0, rgbGreen / 255.0, rgbBlue / 255.0);
+
+            rgbRed = (rgbRed + 1) % 256;
+            rgbGreen = (rgbGreen + 3) % 256;
+            rgbBlue = (rgbBlue + 5) % 256;
+        }
+
+        private void ShowWin()
+        {
+            ClearMiddle();
+            BrainPad.Display.DrawLargeText(30, 50, "Well Done!", BrainPad.Color.White);
+            BrainPad.TrafficLight.TurnYellowLightOff();
+            melodySuccess.Play(1000);
+        }
+
+        private void ShowLoss()
+        {
+            ClearMiddle();
+            BrainPad.Display.DrawLargeText(40, 40, "Looser!", BrainPad.Color.White);
+            BrainPad.Display.DrawLargeText(45, 65, "Sorry!", BrainPad.Color.White);
+            BrainPad.TrafficLight.TurnOffAllLights();
+            BrainPad.TrafficLight.TurnRedLightOn();
+            score = -1;
+            melodyFail.Play(1000);            
         }
 
         private void DrawPlayer()
@@ -246,7 +272,7 @@ namespace EscapeGame.Activities
          .N(Melody.NOTE_E5)
          .N(Melody.NOTE_E5);
 
-        private static readonly Melody melodyFail = new Melody(10)
+        private static readonly Melody melodyFail = new Melody(2)
          .N(Melody.NOTE_G4, 8)
          .N(Melody.NOTE_C4, 4);
     }
