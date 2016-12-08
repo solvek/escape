@@ -57,10 +57,7 @@ namespace EscapeGame.Activities
             {
                 PrepareRound();
 
-                while (PlayRound())
-                {
-                    if (BrainPad.Button.IsLeftPressed() && PromptExit()) return;
-                }
+                while (PlayRound());
 
                 BrainPad.LightBulb.TurnOff();
 
@@ -77,11 +74,16 @@ namespace EscapeGame.Activities
                     currentPlayer = (currentPlayer + 1) % players;
                 }
 
-                BrainPad.Display.DrawText(32, 85, "Press Right Button", BrainPad.Color.Red);
+                BrainPad.Display.DrawText(5, 85, "Left - Exit, Right - Next", BrainPad.Color.Red);
 
-                while (!BrainPad.Button.IsRightPressed())
+                while (BrainPad.Looping)
                 {
-                    BrainPad.Wait.Milliseconds(10);
+                    BrainPad.Wait.Milliseconds(100);
+                    if (BrainPad.Button.IsRightPressed()) break;
+                    if (BrainPad.Button.IsLeftPressed())
+                    {
+                        if (PromptExit()) return; else break;
+                    }
                 }
             }
         }
@@ -221,9 +223,11 @@ namespace EscapeGame.Activities
 
         private bool PromptExit()
         {
-            ClearMiddle();
-            BrainPad.Display.DrawText(30, 50, "Do you really want to exit?", BrainPad.Color.Red);
-            BrainPad.Display.DrawText(10, 60, "Left - for YES, Right - for NO", BrainPad.Color.Red);
+            BrainPad.Display.Clear();
+            BrainPad.Display.DrawText(30, 50, "Do you really", BrainPad.Color.Red);
+            BrainPad.Display.DrawText(30, 60, "want to exit?", BrainPad.Color.Red);
+            BrainPad.Display.DrawText(30, 80, "Left - for YES", BrainPad.Color.Red);
+            BrainPad.Display.DrawText(30, 90, "Right - for NO", BrainPad.Color.Red);
 
             while(BrainPad.Button.IsLeftPressed())
             {
