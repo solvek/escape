@@ -108,6 +108,7 @@ namespace EscapeGame.Activities
                         BrainPad.Display.DrawLargeText(45, 65, "Sorry!", BrainPad.Color.White);
                         BrainPad.TrafficLight.TurnOffAllLights();
                         BrainPad.TrafficLight.TurnRedLightOn();
+                        melodyFail.Play(1000);
                         score = -1;
                         break;
                     }
@@ -233,25 +234,20 @@ namespace EscapeGame.Activities
         }
 
 
-        private static readonly Melody melodySuccess = new Melody(16)
-         .N(Melody.NOTE_E7, 12)
-         .N(Melody.NOTE_E7)
-         .N(0)
-         .N(Melody.NOTE_E7)
+        private static readonly Melody melodySuccess = new Melody(10)
+         .N(Melody.NOTE_A5, 16)
+         .N(Melody.NOTE_B5)
+         .N(Melody.NOTE_C5)
+         .N(Melody.NOTE_B5)
+         .N(Melody.NOTE_C5)
+         .N(Melody.NOTE_D5)
+         .N(Melody.NOTE_E5)
+         .N(Melody.NOTE_D5)
+         .N(Melody.NOTE_E5)
+         .N(Melody.NOTE_E5);
 
-         .N(0)
-         .N(Melody.NOTE_C7)
-         .N(Melody.NOTE_E7)
-         .N(0)
-
-         .N(Melody.NOTE_G7)
-         .N(0)
-         .N(0)
-         .N(0)
-
-         .N(Melody.NOTE_G6)
-         .N(0)
-         .N(0)
-         .N(0);
+        private static readonly Melody melodyFail = new Melody(10)
+         .N(Melody.NOTE_G4, 8)
+         .N(Melody.NOTE_C4, 4);
     }
 }
