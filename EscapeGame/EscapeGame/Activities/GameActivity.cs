@@ -82,7 +82,15 @@ namespace EscapeGame.Activities
                     if (BrainPad.Button.IsRightPressed()) break;
                     if (BrainPad.Button.IsLeftPressed())
                     {
-                        if (PromptExit()) return; else break;
+                        if (PromptExit())
+                        {
+                            DestroyActivity();
+                            return;
+                        }
+                        else
+                        {
+                            break;
+                        }
                     }
                 }
             }
@@ -92,7 +100,7 @@ namespace EscapeGame.Activities
         {
             PlayColor();
 
-            BrainPad.Wait.Milliseconds(50);
+            BrainPad.Wait.Milliseconds(100);
 
             long ticks = (DateTime.Now - startTime).Ticks;
 
@@ -103,7 +111,7 @@ namespace EscapeGame.Activities
             if (ticks > 600 * TimeSpan.TicksPerSecond || lastContact == Contact.Loss)
             {
                 ShowLoss();
-                BrainPad.WriteDebugMessage("Fail happend");
+                //BrainPad.WriteDebugMessage("Fail happend");
                 return false;
             }                    
 
@@ -254,6 +262,13 @@ namespace EscapeGame.Activities
             }
 
             return false;
+        }
+
+        private void DestroyActivity()
+        {
+            inputStart.Dispose();
+            inputLoss.Dispose();
+            inputFinish.Dispose();
         }
 
         private enum Contact
