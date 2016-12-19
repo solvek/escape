@@ -175,7 +175,8 @@ namespace EscapeGame.Activities
         private void ShowWin()
         {
             ClearMiddle();
-            BrainPad.Display.DrawLargeText(30, 50, "Well Done!", BrainPad.Color.White);
+            BrainPad.Display.DrawLargeText(20, 40, "Well Done!", BrainPad.Color.White);
+            BrainPad.Display.DrawLargeText(60, 65, DisplayNumber(score, 6), BrainPad.Color.Green);
             BrainPad.TrafficLight.TurnYellowLightOff();
             melodySuccess.Play(1000);
         }
