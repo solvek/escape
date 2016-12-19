@@ -154,6 +154,7 @@ namespace EscapeGame.Activities
                 BrainPad.Wait.Milliseconds(5);
             }
 
+            melodyStart.Play(1000);
             ClearMiddle();
 
             startTime = DateTime.Now;
@@ -296,5 +297,11 @@ namespace EscapeGame.Activities
         private static readonly Melody melodyFail = new Melody(2)
          .N(Melody.NOTE_G4, 8)
          .N(Melody.NOTE_C4, 4);
+
+        private static readonly Melody melodyStart = new Melody(4)
+         .N(Melody.NOTE_C4, 12)
+         .N(Melody.NOTE_C5)
+         .N(Melody.NOTE_A3)
+         .N(Melody.NOTE_A4);
     }
 }
