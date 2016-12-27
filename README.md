@@ -1,5 +1,7 @@
 # Overview
 
+<img src="doc/Overview.jpg" alt="Prototype" width="400">
+
 A game with BrainPad board
 
 # BrainPad development
@@ -29,3 +31,9 @@ In order to enabe sound
 <img src="doc/Board.jpg" alt="Board Overview" width="400">
 
 [Sketchup Model](doc/Board.skp)
+
+# Demo Video
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=mLoL8L5oKZ8
+" target="_blank"><img src="http://img.youtube.com/vi/mLoL8L5oKZ8/0.jpg" 
+alt="Escape Demo" width="400" height="300" border="10" /></a>
